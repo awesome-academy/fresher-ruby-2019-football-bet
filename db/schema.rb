@@ -83,17 +83,16 @@ ActiveRecord::Schema.define(version: 2019_08_19_074200) do
     t.datetime "finish_time"
     t.integer "goals_home_team"
     t.integer "goals_guest_team"
-    t.bigint "round_id"
+    t.bigint "rounds_id"
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["round_id"], name: "index_matches_on_round_id"
+    t.index ["rounds_id"], name: "index_matches_on_rounds_id"
   end
 
   create_table "newspapers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.text "content"
     t.string "image"
     t.integer "status"
     t.bigint "category_id"
@@ -108,15 +107,15 @@ ActiveRecord::Schema.define(version: 2019_08_19_074200) do
     t.integer "number"
     t.string "country"
     t.datetime "birthday"
-    t.bigint "football_club_id"
+    t.bigint "football_clubs_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["football_club_id"], name: "index_players_on_football_club_id"
+    t.index ["football_clubs_id"], name: "index_players_on_football_clubs_id"
   end
 
   create_table "rankings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.bigint "season_id"
-    t.bigint "football_club_id"
+    t.bigint "seasons_id"
+    t.bigint "football_clubs_id"
     t.integer "goals_number"
     t.integer "goals_lost_number"
     t.integer "games_win"
@@ -124,16 +123,16 @@ ActiveRecord::Schema.define(version: 2019_08_19_074200) do
     t.integer "games_draw"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["football_club_id"], name: "index_rankings_on_football_club_id"
-    t.index ["season_id"], name: "index_rankings_on_season_id"
+    t.index ["football_clubs_id"], name: "index_rankings_on_football_clubs_id"
+    t.index ["seasons_id"], name: "index_rankings_on_seasons_id"
   end
 
   create_table "rounds", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "round_number"
-    t.bigint "season_id"
+    t.bigint "seasons_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["season_id"], name: "index_rounds_on_season_id"
+    t.index ["seasons_id"], name: "index_rounds_on_seasons_id"
   end
 
   create_table "seasons", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -165,11 +164,11 @@ ActiveRecord::Schema.define(version: 2019_08_19_074200) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "newspapers"
   add_foreign_key "comments", "users"
-  add_foreign_key "matches", "rounds"
+  add_foreign_key "matches", "rounds", column: "rounds_id"
   add_foreign_key "newspapers", "categories"
-  add_foreign_key "players", "football_clubs"
-  add_foreign_key "rankings", "football_clubs"
-  add_foreign_key "rankings", "seasons"
-  add_foreign_key "rounds", "seasons"
+  add_foreign_key "players", "football_clubs", column: "football_clubs_id"
+  add_foreign_key "rankings", "football_clubs", column: "football_clubs_id"
+  add_foreign_key "rankings", "seasons", column: "seasons_id"
+  add_foreign_key "rounds", "seasons", column: "seasons_id"
   add_foreign_key "seasons", "leagues"
 end
