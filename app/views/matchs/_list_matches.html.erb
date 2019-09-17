@@ -6,6 +6,7 @@
           <th><%= t "time_title" %></th>
           <th colspan="3"><%= t "match" %></th>
           <th><%= t "stadium" %></th>
+          <th><%= t "details" %></th>
         </tr>
       </thead>
       <tbody>
@@ -28,6 +29,11 @@
             <%= match.guest_team.name %>
           </th>
           <th><%= match.home_team.stadium %> </th>
+          <th>
+            <%= link_to  match do  %>
+            <i class="fa fa-forward"></i>
+            <% end %>
+          </th>
         </tr>
         <% end %>
       </tbody>
